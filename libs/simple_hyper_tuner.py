@@ -170,20 +170,20 @@ def gridsearchcv_tuner(X, y, params, verbose=1, do_categorize=True, X_test=None)
     for p in params:
         for train_size in p['splitter']['train_size']:
             for random_state in p['splitter']['random_state']:
-                if not p['reducer']:
-                    print('> Reducer: none')
-                    X_reduced = X
-                else:
-                    reducer = p['reducer']
-                    print('> Reducer:', reducer)
-                    reducer_model = reducer.fit(X)
-                    X_reduced = reducer_model.transform(X)
-                    # X_reduced = reducer_model.embedding_
-                    print('- X reduced shape: ', X_reduced.shape)
+                # if p['reducer']:
+                #     print('> Reducer: none')
+                #     X_reduced = X
+                # else:
+                #     reducer = p['reducer']
+                #     print('> Reducer:', reducer)
+                #     reducer_model = reducer.fit(X)
+                #     X_reduced = reducer_model.transform(X)
+                #     # X_reduced = reducer_model.embedding_
+                #     print('- X reduced shape: ', X_reduced.shape)
                     # plt.scatter(reducer_model.embedding_[:, 0], reducer_model.embedding_[:, 1], s=5, c=y, cmap='Spectral')
                     # plt.title('Embedding of the training set by reducer', fontsize=24)
 
-                X_train, X_valid, y_train, y_valid = train_test_split(X_reduced, y, train_size=train_size, random_state=random_state)
+                X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=train_size, random_state=random_state)
                 if do_categorize is True:
                     if X_test is None:
                         X_train, X_valid = categorize(X_train, X_valid)
